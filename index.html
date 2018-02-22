@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+
+
+</head>
+<body>
+
+<div style="position:fixed;top:20px;left:20px;">
+    <p>だいたい黒枠のところが画像になります</p>
+    <button onclick="generate()">生成</button>
+    <button onclick="erase_screenshot()">クリア</button>
+    <a id="download" href="#" download="wallpaper.png"></a>
+    <div class="text-form">
+        <div>表示させたい文字列</div>
+        <button onclick="txt_add()">追加</button>
+        <button onclick="txt_remove()">削除</button>
+        <div  class="input-text">
+            文字列:<input type="text" name="txt">
+            文字色:<input  class="jscolor" type="text" name="color">
+        </div>
+    </div>
+</div>
+<div id="contents" style="border: 1px solid #000000;width:1280px;height:960px;"></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js"></script>
+<script type="text/javascript">
+
+function txt_add( ) {
+    $(".text-form").append(
+        $("<div></div>").addClass("input-text").append("文字列:").append($("<input>").attr("input","text").attr("name","txt")).append("文字列:").append($("<input>").attr("input","text").attr("name","color").addClass("jscolor"))
+    );    
+    jscolor.installByClassName("jscolor");
+}
+
+function txt_remove( ) {
+    $(".text-form .input-text").last().remove();
+}
+
+function generate(){
+    $(document).ready(function() {
+    erase_screenshot();
+    $("#contents").innerHeight(960);
+    $("#contents").innerWidth(1280);
+
+    var ga = [];
+    $(".input-text").map(function() {
+        ga.push([$(this).children("input[name=txt]").val(),$(this).children("input[name=color]").val()]);
+    });
+
+    //var ga=[[$("#text1").val(),"#ffb900"],[$("#text2").val(),"#32145a"],[$("#text3").val(),"#e3008c"]];
+
+
+
+    var i=0, len=ga.length;
+    var w=$("#contents").width();
+    var h=$("#contents").height();
+
+    var posi="fixed"; 
+    var Imgn=50;
+    var opa=0.9;
+    var tp=-w/6;
+    var lp=-h/6;
+
+    var min = 12 ;
+    var max = 128 ;
+
+    for (i=0; i < Imgn; i++){ 
+        var xpx = Math.floor(w*Math.random())+lp; 
+        var ypx = Math.floor(h*Math.random())+tp;
+        var fs = Math.floor( Math.random() * (max + 1 - min) ) + min ;
+        var c = Math.floor( Math.random() * (360 + 1) ) ;
+        var index = i % ga.length;
+        if (index === undefined) {
+            index = 0;
+        }
+        var sss="<div style='position:"+posi+"; left:"+xpx+"px; top:"+ypx+"px; z-index:-1; opacity:"+opa+";font-size:"+fs+"px;transform: rotate("+c+"deg);color: #"+ga[index][1]+";'>"+ga[index][0]+"</div>";
+        $("#contents").append(sss);
+    }
+    
+    html2canvas($("#contents")[0], { onrendered: function(canvas) {
+        var imgData = canvas.toDataURL();
+        $('#download')[0].href = imgData;
+        $('#download')[0].innerHTML = "ダウンロード";
+    }});
+    });
+}
+
+
+function erase_screenshot() {
+    $("#contents").empty();
+    $('#download')[0].href = "#";
+    $('#download')[0].innerHTML = "";
+}
+</script>
+
+</body>
+</html>
