@@ -17,7 +17,6 @@
     <div class="text-form">
         <div>表示させたい文字列</div>
         <button onclick="txt_add()">追加</button>
-        <button onclick="txt_remove()">削除</button>
         <div  class="input-text">
             文字列:<input type="text" name="txt">
             文字色:<input  class="jscolor" type="text" name="color">
@@ -34,14 +33,14 @@
 
 function txt_add( ) {
     $(".text-form").append(
-        $("<div></div>").addClass("input-text").append("文字列:").append($("<input>").attr("input","text").attr("name","txt")).append("文字列:").append($("<input>").attr("input","text").attr("name","color").addClass("jscolor"))
+        $("<div></div>").addClass("input-text").append("文字列:").append($("<input>").attr("input","text").attr("name","txt")).append("文字列:").append($("<input>").attr("input","text").attr("name","color").addClass("jscolor")).append($("button").text("削除").addClass("tremove"))
     );    
     jscolor.installByClassName("jscolor");
 }
 
-function txt_remove( ) {
-    $(".text-form .input-text").last().remove();
-}
+$(ducument).on("click",".text-form",function(){
+    $(this).parent().remove();
+});
 
 function generate(){
     $(document).ready(function() {
@@ -54,11 +53,6 @@ function generate(){
         ga.push([$(this).children("input[name=txt]").val(),$(this).children("input[name=color]").val()]);
     });
 
-    //var ga=[[$("#text1").val(),"#ffb900"],[$("#text2").val(),"#32145a"],[$("#text3").val(),"#e3008c"]];
-
-
-
-    var i=0, len=ga.length;
     var w=$("#contents").width();
     var h=$("#contents").height();
 
