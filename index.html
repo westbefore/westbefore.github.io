@@ -45,15 +45,15 @@ function txt_add( ) {
             $("<input>").attr("input","text").attr("name","txt")
         ).append(" 文字色:").append(
             $("<input>").attr("input","text").attr("name","color").addClass("jscolor")
-        ).append(
+        ).append(" ").append(
             $("<button>").text("削除").addClass("tremove")
         )
     );    
     jscolor.installByClassName("jscolor");
 }
 
-$(document).on("click",".tremove",function(e){
-    $(e).parent().remove();
+$(document).on("click",".tremove",function(){
+    $(this).parent().remove();
 });
 
 function generate(){
