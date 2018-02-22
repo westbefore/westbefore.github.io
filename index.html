@@ -41,7 +41,13 @@
 
 function txt_add( ) {
     $(".text-form").append(
-        $("<div></div>").addClass("input-text").append("文字列:").append($("<input>").attr("input","text").attr("name","txt")).append(" 文字色:").append($("<input>").attr("input","text").attr("name","color").addClass("jscolor")).append($("button").text("削除").addClass("tremove"))
+        $("<div></div>").addClass("input-text").append("文字列:").append(
+            $("<input>").attr("input","text").attr("name","txt")
+        ).append(" 文字色:").append(
+            $("<input>").attr("input","text").attr("name","color").addClass("jscolor")
+        ).append(
+            $("button").text("削除").addClass("tremove")
+        )
     );    
     jscolor.installByClassName("jscolor");
 }
