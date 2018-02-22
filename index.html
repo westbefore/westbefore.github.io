@@ -38,7 +38,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js"></script>
 <script type="text/javascript">
-
+    
+function escape_html (string) {
+  if(typeof string !== 'string') {
+    return string;
+  }
+  return string.replace(/[&'`"<>]/g, function(match) {
+    return {
+      '&': '&amp;',
+      "'": '&#x27;',
+      '`': '&#x60;',
+      '"': '&quot;',
+      '<': '&lt;',
+      '>': '&gt;',
+    }[match]
+  });
+}
+    
 function txt_add( ) {
     $(".text-form").append(
         $("<div></div>").addClass("input-text").append("文字列:").append(
@@ -64,7 +80,7 @@ function generate(){
 
     var ga = [];
     $(".input-text").map(function() {
-        ga.push([$(this).children("input[name=txt]").val(),$(this).children("input[name=color]").val()]);
+        ga.push([escape_html($(this).children("input[name=txt]").val()),escape_html($(this).children("input[name=color]").val())]);
     });
 
     var w=$("#contents").width();
