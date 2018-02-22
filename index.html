@@ -20,6 +20,7 @@
         <div  class="input-text">
             文字列:<input type="text" name="txt">
             文字色:<input  class="jscolor" type="text" name="color">
+            <button class="tremove">削除</button>
         </div>
     </div>
 </div>
@@ -33,12 +34,12 @@
 
 function txt_add( ) {
     $(".text-form").append(
-        $("<div></div>").addClass("input-text").append("文字列:").append($("<input>").attr("input","text").attr("name","txt")).append("文字列:").append($("<input>").attr("input","text").attr("name","color").addClass("jscolor")).append($("button").text("削除").addClass("tremove"))
+        $("<div></div>").addClass("input-text").append("文字列:").append($("<input>").attr("input","text").attr("name","txt")).append(" 文字色:").append($("<input>").attr("input","text").attr("name","color").addClass("jscolor")).append($("button").text("削除").addClass("tremove"))
     );    
     jscolor.installByClassName("jscolor");
 }
 
-$(ducument).on("click",".text-form",function(){
+$(ducument).on("click",".tremove",function(){
     $(this).parent().remove();
 });
 
