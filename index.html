@@ -52,8 +52,8 @@ function txt_add( ) {
     jscolor.installByClassName("jscolor");
 }
 
-$(document).on("click",".tremove",function(){
-    $(this).parent().remove();
+$(document).on("click",".tremove",function(e){
+    $(e).parent().remove();
 });
 
 function generate(){
